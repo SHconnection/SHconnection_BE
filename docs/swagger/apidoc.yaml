@@ -409,10 +409,17 @@ paths:
           schema:
             $ref: '#/definitions/ProfileBriefs'
 
-  /feeds/:
+  /feeds/{pagenum}/:
     get:
       tags:
       - feed
+      summary: feed流
+      parameters:
+      - in: path
+        name: pagenum
+        type: integer
+        description: 页码数
+        required: true
       responses:
         200:
           description: ok
@@ -435,7 +442,7 @@ paths:
     get:
       tags:
       - feed
-      description: 获取Feed详细信息
+      summary: 获取Feed详细信息
       parameters:
       - in: path
         name: feedid
@@ -462,7 +469,7 @@ paths:
     post:
       tags:
       - feed
-      description: 阅读
+      summary: 阅读某个feed
       parameters:
       - in: path
         name: feedid
@@ -531,7 +538,7 @@ paths:
     get:
       tags:
       - feed
-      description: 获取某个feed的评论
+      summary: 获取某个feed的评论
       parameters:
       - in: path
         name: feedid

@@ -314,10 +314,258 @@ paths:
         403: 
           description: "不是班主任不允许创建" 
         
+  
+  paths:
+  /api/feeds/:
+    get:
+      tags: 
+      - feed
+      responses:
+        200:
+          description: ok
+          schema:
+            type: object
+            properties:
+              pagenum:
+                type: integer
+                description: 页数
+              nums:
+                type: integer
+                description: 获取了多少Feed
+              hasnext:
+                type: boolean
+              feeds:
+                type: object
+                $ref: '#/definitions/Feeds'
             
+  /api/feed/{feedid}/:
+    get:
+      tags: 
+      - feed
+      description: 获取Feed详细信息
+      parameters: 
+      - in: path
+        name: feedid
+        type: integer
+        description: feed id
+        required: true
+        
+      responses:
+        200:
+          description: ok
+          schema:
+            type: object
+            properties:
+              feedinfo:
+                $ref: '#/definitions/Feed'
+              readed:
+                description: 已读家长
+                $ref: '#/definitions/ParentSimpleInfos'
+              unreaded:
+                description: 未读家长
+                $ref: '#/definitions/ParentSimpleInfos'
+  
+  /api/feed/{feedid}/read/:
+    post:
+      tags: 
+      - feed
+      description: 阅读
+      parameters: 
+      - in: path
+        name: feedid
+        type: integer
+        description: feed id
+        required: true
+      - in: body
+        name: postbody
+        schema:
+          type: object
+          properties:
+            pid:
+              type: integer
+              description: parent id
+      
+      responses:
+        200:
+          description: ok
+      
+  /api/feed/:
+    post:
+      tags: 
+      - feed
+      summary: 发送feed
+      parameters: 
+      - in: header
+        name: Token
+        type: string
+        description: Token
+        required: true
+      - in: body
+        name: postbody
+        schema:
+          type: object
+          $ref: '#/definitions/FeedPost'
+      responses:
+        201: 
+          description: created
+      
+  /api/feed/{feedid}/comment/:
+    post:
+      tags: 
+      - feed
+      summary: 发送评论
+      parameters:
+      - in: header
+        name: Token
+        type: string
+        description: Token
+        required: true
+      - in: path
+        name: feedid
+        type: integer
+        description: feed id
+        required: true
+      - in: body
+        name: postbody
+        schema:
+          type: object
+          $ref: '#/definitions/FeedCommentPost'
+      responses:
+        201:
+          description: created
+  
+  /api/feed/{feedid}/comments/:
+    get:
+      tags: 
+      - feed
+      description: 获取某个feed的评论
+      parameters: 
+      - in: path
+        name: feedid
+        type: string
+        description: feed id
+        required: true
+        
+      responses:
+        200:
+          description: ok
+          schema:
+            type: object
+            properties:
+              pagenum:
+                type: integer
+                description: 页数
+              num: 
+                type: integer
+                description: 获取了多少Comment
+              comments:
+                type: object
+                $ref: '#/definitions/FeedComments'
+   
         
             
 definitions:
+  FeedPost:
+    type: object
+    description: feed post
+    properties:
+      classId:
+        type: integer
+      teacherId:
+        type: integer
+      type:
+        type: string
+        description: 信息类型, 包括"作业"、"通知"、"分享"
+      content:
+        type: string
+        description: 内容
+
+  Feed:
+    type: object
+    description: feed
+    properties:
+      id:
+        type: integer
+      classId:
+        type: integer
+        description: 课堂id
+      teacherSimpleInfo:
+        type: object
+        $ref: '#/definitions/TeacherSimpleInfo'
+      type:
+        type: string
+        description: 信息类型, 包括"作业"、"通知"、"分享"
+      content:
+        type: string
+        description: 内容
+      likes:
+        type: integer
+        description: like的人数
+      liked:
+        type: boolean
+        description: 是否已喜欢
+  
+  Feeds:
+    type: array
+    items:
+      $ref: '#/definitions/Feed'
+  
+  ParentSimpleInfo:
+    type: object
+    description: 简单家长信息
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      avatar:
+        type: string
+  
+  ParentSimpleInfos:
+    type: array
+    items:
+      $ref: '#/definitions/ParentSimpleInfo'
+  
+  TeacherSimpleInfo:
+    type: object
+    description: 教师简单信息
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      avatar:
+        type: string
+        
+  FeedCommentPost:
+    type: object
+    properties:
+      id:
+        type: integer
+      feedId:
+        type: integer
+      content:
+        type: string
+  
+  FeedComment:
+    type: object
+    properties:
+      id:
+        type: integer
+      feedId:
+        type: integer
+      content:
+        type: string
+      like:
+        type: integer
+        description: 喜欢的人数
+  
+  FeedComments:
+    type: array
+    items:
+      $ref: '#/definitions/FeedComment'
+      
+
 
   Score:
     type: "object"
@@ -471,5 +719,6 @@ definitions:
         items:
           $ref: "#/definitions/Score"
         
+
 
 

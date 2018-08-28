@@ -6,18 +6,16 @@ info:
 host:  test.connection.com
 basePath: /api/
 tags:
-- name: "teacher" 
+- name: "teacher"
   description: "Everything about teacher"
 - name: "parent"
-  description: "Everything about parent" 
-- name: "feed"  
-  description: "Everything about feed" 
-- name: "comment" 
-  description: "Everything about comment" 
-- name: "evaluation" 
-  description: "Everything about evaluation" 
-- name: "class" 
-  description: "Everything about class"  
+  description: "Everything about parent"
+- name: "feed"
+  description: "Everything about feed"
+- name: "evaluation"
+  description: "Everything about evaluation"
+- name: "class"
+  description: "Everything about class"
 schemes:
 - "https"
 - "http"
@@ -44,9 +42,9 @@ paths:
           description: "登录成功"
           schema:
             $ref: '#/definitions/Token'
-        401: 
+        401:
           description: "用户名或密码错误"
-          
+
   /teacher/profile/:
     post:
       tags:
@@ -56,7 +54,7 @@ paths:
       - "application/json"
       produces:
       - "application/json"
-      parameters: 
+      parameters:
       - in: "body"
         name: "body"
         description: "资料信息"
@@ -64,8 +62,8 @@ paths:
         schema:
           $ref: "#/definitions/Profile"
       - in: "header"
-        name: "token" 
-        description: "token" 
+        name: "token"
+        description: "token"
         required: true
         type: "string"
       responses:
@@ -73,7 +71,7 @@ paths:
           description: "修改成功"
         403:
           description: "token过期或验证错误"
-        
+
   /teacher/signup/:
     post:
       tags:
@@ -95,10 +93,39 @@ paths:
           description: "注册成功"
           schema:
             $ref: '#/definitions/TeacherId'
-        403: 
+        403:
           description: "号码重复不能注册"
-        
-        
+          
+  /teacher/info/:
+    get:
+      tags:
+      - "teacher"
+      summary: "获取老师的通讯录信息"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "tid"
+        description: "老师ID"
+        required: true
+        type: "string"
+      - in: "header"
+        name: "token"
+        description: "验证token"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "获取成功"
+          schema:
+            $ref: '#/definitions/Profile'
+        403:
+          description: "token验证错误或过期"
+
+
+
   /evaluation/teacher/all/:
     get:
       tags:
@@ -113,15 +140,20 @@ paths:
         name: "tid"
         description: "老师ID"
         required: true
-        type: "string" 
+        type: "string"
       - in: "query"
         name: "childid"
         description: "孩子ID"
         required: true
-        type: "string" 
+        type: "string"
+      - in: "query"
+        name: "page" 
+        description: "分页页数"
+        type: "integer"
+        required: true 
       - in: "header"
-        name: "token" 
-        description: "token" 
+        name: "token"
+        description: "token"
         required: true
         type: "string"
       responses:
@@ -129,9 +161,9 @@ paths:
           description: "成功"
           schema:
             $ref: '#/definitions/Evaluation'
-        403: 
+        403:
           description: "token验证错误"
-          
+
   /evaluation/parent/all/:
     get:
       tags:
@@ -146,10 +178,15 @@ paths:
         name: "pid"
         description: "家长ID"
         required: true
-        type: "string" 
+        type: "string"
+      - in: "query"
+        name: "page" 
+        description: "分页页数"
+        type: "integer"
+        required: true 
       - in: "header"
-        name: "token" 
-        description: "token" 
+        name: "token"
+        description: "token"
         required: true
         type: "string"
       responses:
@@ -157,10 +194,10 @@ paths:
           description: "成功"
           schema:
             $ref: '#/definitions/Evaluation'
-        403: 
+        403:
           description: "token验证错误"
-          
-          
+
+
   /evaluation/teacher/:
     post:
       tags:
@@ -175,15 +212,15 @@ paths:
         name: "tid"
         description: "老师ID"
         required: true
-        type: "string" 
+        type: "string"
       - in: "query"
         name: "childid"
         description: "孩子ID"
         required: true
-        type: "string" 
+        type: "string"
       - in: "header"
-        name: "token" 
-        description: "token" 
+        name: "token"
+        description: "token"
         required: true
         type: "string"
       - in: "body"
@@ -195,9 +232,9 @@ paths:
       responses:
         200:
           description: "成功"
-        403: 
+        403:
           description: "token验证错误"
-          
+
   /evaluation/parent/:
     post:
       tags:
@@ -212,10 +249,10 @@ paths:
         name: "pid"
         description: "家长ID"
         required: true
-        type: "string" 
+        type: "string"
       - in: "header"
-        name: "token" 
-        description: "token" 
+        name: "token"
+        description: "token"
         required: true
         type: "string"
       - in: "body"
@@ -227,11 +264,11 @@ paths:
       responses:
         200:
           description: "成功"
-        403: 
+        403:
           description: "token验证错误"
-          
-          
-          
+
+
+
   /parent/login/:
     post:
       tags:
@@ -253,10 +290,10 @@ paths:
           description: "登录成功"
           schema:
             $ref: '#/definitions/Token'
-        401: 
+        401:
           description: "用户名或密码错误"
-          
-          
+
+
   /parent/profile/:
     post:
       tags:
@@ -266,7 +303,7 @@ paths:
       - "application/json"
       produces:
       - "application/json"
-      parameters: 
+      parameters:
       - in: "body"
         name: "body"
         description: "资料信息"
@@ -274,8 +311,8 @@ paths:
         schema:
           $ref: "#/definitions/Profile"
       - in: "header"
-        name: "token" 
-        description: "token" 
+        name: "token"
+        description: "token"
         required: true
         type: "string"
       responses:
@@ -284,17 +321,46 @@ paths:
         403:
           description: "token过期或验证错误"
           
-        
+  /parent/info/:
+    get:
+      tags:
+      - "parent"
+      summary: "获取家长的通讯录信息"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "pid"
+        description: "家长ID"
+        required: true
+        type: "string"
+      - in: "header"
+        name: "token"
+        description: "验证token"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "获取成功"
+          schema:
+            $ref: '#/definitions/Profile'
+        403:
+          description: "token验证错误或过期"
+
+
+
   /class/:
     post:
-      tags: 
+      tags:
       - "class"
       summary: "班主任创建班级"
       consumes:
       - "application/json"
       produces:
       - "application/json"
-      parameters: 
+      parameters:
       - in: "body"
         name: "body"
         description: "班主任信息"
@@ -302,23 +368,50 @@ paths:
         schema:
           $ref: "#/definitions/Createclass"
       - in: "header"
-        name: "token" 
-        description: "登录token" 
+        name: "token"
+        description: "登录token"
         required: true
         type: "string"
       responses:
         200:
-          description: "创建成功，返回创建班级的ID" 
+          description: "创建成功，返回创建班级的ID"
           schema:
             $ref: '#/definitions/ClassId'
-        403: 
-          description: "不是班主任不允许创建" 
-        
-  
-  paths:
-  /api/feeds/:
+        403:
+          description: "不是班主任不允许创建"
+
+  /class/info/:
     get:
-      tags: 
+      tags:
+        - "class"
+      summary: "返回班级通讯录"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "header"
+        name: "token"
+        description: "登录token"
+        required: true
+        type: "string"
+      - in: "query"
+        name: "cid" 
+        description: "班级id"
+        type: "string"
+      responses:
+        403:
+          description: "token验证错误或过期"
+        404:
+          description: "班级不存在"
+        200:
+          description: "获取成功"
+          schema:
+            $ref: '#/definitions/ProfileBriefs'
+
+  /feeds/:
+    get:
+      tags:
       - feed
       responses:
         200:
@@ -337,19 +430,19 @@ paths:
               feeds:
                 type: object
                 $ref: '#/definitions/Feeds'
-            
-  /api/feed/{feedid}/:
+
+  /feed/{feedid}/:
     get:
-      tags: 
+      tags:
       - feed
       description: 获取Feed详细信息
-      parameters: 
+      parameters:
       - in: path
         name: feedid
         type: integer
         description: feed id
         required: true
-        
+
       responses:
         200:
           description: ok
@@ -364,13 +457,13 @@ paths:
               unreaded:
                 description: 未读家长
                 $ref: '#/definitions/ParentSimpleInfos'
-  
-  /api/feed/{feedid}/read/:
+
+  /feed/{feedid}/read/:
     post:
-      tags: 
+      tags:
       - feed
       description: 阅读
-      parameters: 
+      parameters:
       - in: path
         name: feedid
         type: integer
@@ -384,17 +477,17 @@ paths:
             pid:
               type: integer
               description: parent id
-      
+
       responses:
         200:
           description: ok
-      
-  /api/feed/:
+
+  /feed/:
     post:
-      tags: 
+      tags:
       - feed
       summary: 发送feed
-      parameters: 
+      parameters:
       - in: header
         name: Token
         type: string
@@ -406,12 +499,12 @@ paths:
           type: object
           $ref: '#/definitions/FeedPost'
       responses:
-        201: 
+        201:
           description: created
-      
-  /api/feed/{feedid}/comment/:
+
+  /feed/{feedid}/comment/:
     post:
-      tags: 
+      tags:
       - feed
       summary: 发送评论
       parameters:
@@ -433,19 +526,19 @@ paths:
       responses:
         201:
           description: created
-  
-  /api/feed/{feedid}/comments/:
+
+  /feed/{feedid}/comments/:
     get:
-      tags: 
+      tags:
       - feed
       description: 获取某个feed的评论
-      parameters: 
+      parameters:
       - in: path
         name: feedid
         type: string
         description: feed id
         required: true
-        
+
       responses:
         200:
           description: ok
@@ -455,15 +548,15 @@ paths:
               pagenum:
                 type: integer
                 description: 页数
-              num: 
+              num:
                 type: integer
                 description: 获取了多少Comment
               comments:
                 type: object
                 $ref: '#/definitions/FeedComments'
-   
-        
-            
+
+
+
 definitions:
   FeedPost:
     type: object
@@ -504,12 +597,12 @@ definitions:
       liked:
         type: boolean
         description: 是否已喜欢
-  
+
   Feeds:
     type: array
     items:
       $ref: '#/definitions/Feed'
-  
+
   ParentSimpleInfo:
     type: object
     description: 简单家长信息
@@ -520,12 +613,12 @@ definitions:
         type: string
       avatar:
         type: string
-  
+
   ParentSimpleInfos:
     type: array
     items:
       $ref: '#/definitions/ParentSimpleInfo'
-  
+
   TeacherSimpleInfo:
     type: object
     description: 教师简单信息
@@ -536,7 +629,7 @@ definitions:
         type: string
       avatar:
         type: string
-        
+
   FeedCommentPost:
     type: object
     properties:
@@ -546,7 +639,7 @@ definitions:
         type: integer
       content:
         type: string
-  
+
   FeedComment:
     type: object
     properties:
@@ -559,38 +652,42 @@ definitions:
       like:
         type: integer
         description: 喜欢的人数
-  
+
   FeedComments:
     type: array
     items:
       $ref: '#/definitions/FeedComment'
-      
+
 
 
   Score:
     type: "object"
-    required: 
+    required:
     - "name"
     - "score"
     properties:
       name:
-        type: "string" 
+        type: "string"
         description: "评分项"
       score:
         type: "integer"
-        description: "分数" 
-        
+        description: "分数"
+
   Evaluation_:
-    type: "object" 
-    required : 
-    - "content" 
+    type: "object"
+    required :
+    - "content"
     - "typeid"
     - "fromname"
     - "toname"
     - "score"
+    - "time" 
     properties:
+      time: 
+        type: "string"
+        description: "评论时间" 
       score:
-        type: "array" 
+        type: "array"
         xml:
           name: "score"
           wrapped: true
@@ -602,16 +699,16 @@ definitions:
       fromname:
         description: "评价者"
         type: "string"
-      toname: 
+      toname:
         type: "string"
         description: "被评价者"
       typeid:
         type: "integer"
         description: "评价类型"
-  
+
   Evaluation:
     type: "object"
-    required: 
+    required:
     - "eval"
     properties:
       eval:
@@ -621,104 +718,138 @@ definitions:
           wrapped: true
         items:
           $ref: "#/definitions/Evaluation_"
-          
+
   Login:
     type: "object"
-    required: 
+    required:
     - "tel"
     - "password"
     properties:
       tel:
-        type: "string" 
+        type: "string"
       password:
         type: "string"
-      
+
   Token:
     type: "object"
-    required: 
+    required:
     - 'token'
     properties:
       token:
-        type: "string" 
-        
+        type: "string"
+
   Profile:
     type: "object"
-    required: 
+    required:
     - "name"
     - "tel"
     - "wechat"
     - "intro"
-    - "avatar" 
+    - "avatar"
     properties:
       tel:
-        type: "string" 
+        type: "string"
       name:
         type: "string"
       wechat:
         type: "string"
       intro:
         type: "string"
-      avatar: 
-        type: "string" 
-    
+      avatar:
+        type: "string"
+
   Createclass:
     type: "object"
-    required: 
+    required:
     - "name"
     - "tel"
     properties:
       tel:
-        type: "string" 
+        type: "string"
       name:
         type: "string"
-        
+
   ClassId:
     type: "object"
-    required: 
+    required:
     - 'cid'
     properties:
       cid:
-        type: "string" 
-        
+        type: "string"
+
   Signup:
     type: "object"
-    required: 
+    required:
     - "name"
     - "password"
     - "tel"
     properties:
       tel:
-        type: "string" 
+        type: "string"
       password:
-        type: "string"  
-      name: 
-        type: "string" 
-        
+        type: "string"
+      name:
+        type: "string"
+
   TeacherId:
     type: "object"
-    required: 
+    required:
     - 'tid'
     properties:
       tid:
-        type: "string" 
-        
-        
+        type: "string"
+
+
   Comment:
     type: "object"
-    required: 
+    required:
     - "comment"
     - "score"
     properties:
       comment:
-        type: "string" 
+        type: "string"
       score:
-        type: "array" 
+        type: "array"
         xml:
           name: "score"
           wrapped: true
         items:
           $ref: "#/definitions/Score"
+
+
+  ProfileBrief:
+    type: "object"
+    required:
+    - "name"
+    - "tel"
+    - "avatar"
+    properties:
+      tel:
+        type: "string"
+      name:
+        type: "string"
+      avatar:
+        type: "string"
         
-
-
-
+  ProfileBriefs:
+    type: "object"
+    required: 
+    - "teacher"
+    - "parent" 
+    properties:
+      teacher:
+        type: "array"
+        xml:
+          name: "teacher"
+          wrapped: true
+        items:
+          $ref: "#/definitions/ProfileBrief"
+      parent:
+        type: "array"
+        xml:
+          name: "parent"
+          wrapped: true
+        items:
+          $ref: "#/definitions/ProfileBrief"
+      
+      

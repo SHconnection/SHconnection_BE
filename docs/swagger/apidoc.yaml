@@ -1,0 +1,475 @@
+swagger: "2.0"
+info:
+  description: "SHconnection"
+  version: "1.0.0"
+  title: "SHconnection"
+host:  test.connection.com
+basePath: /api/
+tags:
+- name: "teacher" 
+  description: "Everything about teacher"
+- name: "parent"
+  description: "Everything about parent" 
+- name: "feed"  
+  description: "Everything about feed" 
+- name: "comment" 
+  description: "Everything about comment" 
+- name: "evaluation" 
+  description: "Everything about evaluation" 
+- name: "class" 
+  description: "Everything about class"  
+schemes:
+- "https"
+- "http"
+
+paths:
+  /teacher/login/:
+    post:
+      tags:
+      - "teacher"
+      summary: "老师登录"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "登录信息"
+        required: true
+        schema:
+          $ref: "#/definitions/Login"
+      responses:
+        200:
+          description: "登录成功"
+          schema:
+            $ref: '#/definitions/Token'
+        401: 
+          description: "用户名或密码错误"
+          
+  /teacher/profile/:
+    post:
+      tags:
+      - "teacher"
+      summary: "教师修改资料（通讯录）"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: 
+      - in: "body"
+        name: "body"
+        description: "资料信息"
+        required: true
+        schema:
+          $ref: "#/definitions/Profile"
+      - in: "header"
+        name: "token" 
+        description: "token" 
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "修改成功"
+        403:
+          description: "token过期或验证错误"
+        
+  /teacher/signup/:
+    post:
+      tags:
+      - "teacher"
+      summary: "班主任注册"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "注册信息"
+        required: true
+        schema:
+          $ref: '#/definitions/Signup'
+      responses:
+        200:
+          description: "注册成功"
+          schema:
+            $ref: '#/definitions/TeacherId'
+        403: 
+          description: "号码重复不能注册"
+        
+        
+  /evaluation/teacher/all/:
+    get:
+      tags:
+      - "evaluation"
+      summary: "获取某个老师对某个孩子的评价"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "tid"
+        description: "老师ID"
+        required: true
+        type: "string" 
+      - in: "query"
+        name: "childid"
+        description: "孩子ID"
+        required: true
+        type: "string" 
+      - in: "header"
+        name: "token" 
+        description: "token" 
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "成功"
+          schema:
+            $ref: '#/definitions/Evaluation'
+        403: 
+          description: "token验证错误"
+          
+  /evaluation/parent/all/:
+    get:
+      tags:
+      - "evaluation"
+      summary: "获取家长对孩子的评价"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "pid"
+        description: "家长ID"
+        required: true
+        type: "string" 
+      - in: "header"
+        name: "token" 
+        description: "token" 
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "成功"
+          schema:
+            $ref: '#/definitions/Evaluation'
+        403: 
+          description: "token验证错误"
+          
+          
+  /evaluation/teacher/:
+    post:
+      tags:
+      - "evaluation"
+      summary: "某个老师发送对某个孩子的评价"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "tid"
+        description: "老师ID"
+        required: true
+        type: "string" 
+      - in: "query"
+        name: "childid"
+        description: "孩子ID"
+        required: true
+        type: "string" 
+      - in: "header"
+        name: "token" 
+        description: "token" 
+        required: true
+        type: "string"
+      - in: "body"
+        name: "comment"
+        description: "评论"
+        required: true
+        schema:
+          $ref: '#/definitions/Comment'
+      responses:
+        200:
+          description: "成功"
+        403: 
+          description: "token验证错误"
+          
+  /evaluation/parent/:
+    post:
+      tags:
+      - "evaluation"
+      summary: "家长发送对孩子的评价"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "pid"
+        description: "家长ID"
+        required: true
+        type: "string" 
+      - in: "header"
+        name: "token" 
+        description: "token" 
+        required: true
+        type: "string"
+      - in: "body"
+        name: "comment"
+        description: "评论"
+        required: true
+        schema:
+          $ref: '#/definitions/Comment'
+      responses:
+        200:
+          description: "成功"
+        403: 
+          description: "token验证错误"
+          
+          
+          
+  /parent/login/:
+    post:
+      tags:
+      - "parent"
+      summary: "家长登录"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "登录信息"
+        required: true
+        schema:
+          $ref: "#/definitions/Login"
+      responses:
+        200:
+          description: "登录成功"
+          schema:
+            $ref: '#/definitions/Token'
+        401: 
+          description: "用户名或密码错误"
+          
+          
+  /parent/profile/:
+    post:
+      tags:
+      - "parent"
+      summary: "家长修改资料（通讯录）"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: 
+      - in: "body"
+        name: "body"
+        description: "资料信息"
+        required: true
+        schema:
+          $ref: "#/definitions/Profile"
+      - in: "header"
+        name: "token" 
+        description: "token" 
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "修改成功"
+        403:
+          description: "token过期或验证错误"
+          
+        
+  /class/:
+    post:
+      tags: 
+      - "class"
+      summary: "班主任创建班级"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: 
+      - in: "body"
+        name: "body"
+        description: "班主任信息"
+        required: true
+        schema:
+          $ref: "#/definitions/Createclass"
+      - in: "header"
+        name: "token" 
+        description: "登录token" 
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "创建成功，返回创建班级的ID" 
+          schema:
+            $ref: '#/definitions/ClassId'
+        403: 
+          description: "不是班主任不允许创建" 
+        
+            
+        
+            
+definitions:
+
+  Score:
+    type: "object"
+    required: 
+    - "name"
+    - "score"
+    properties:
+      name:
+        type: "string" 
+        description: "评分项"
+      score:
+        type: "integer"
+        description: "分数" 
+        
+  Evaluation_:
+    type: "object" 
+    required : 
+    - "content" 
+    - "typeid"
+    - "fromname"
+    - "toname"
+    - "score"
+    properties:
+      score:
+        type: "array" 
+        xml:
+          name: "score"
+          wrapped: true
+        items:
+          $ref: "#/definitions/Score"
+      content:
+        type: "string"
+        description: "评价"
+      fromname:
+        description: "评价者"
+        type: "string"
+      toname: 
+        type: "string"
+        description: "被评价者"
+      typeid:
+        type: "integer"
+        description: "评价类型"
+  
+  Evaluation:
+    type: "object"
+    required: 
+    - "eval"
+    properties:
+      eval:
+        type: "array"
+        xml:
+          name: "eval"
+          wrapped: true
+        items:
+          $ref: "#/definitions/Evaluation_"
+          
+  Login:
+    type: "object"
+    required: 
+    - "tel"
+    - "password"
+    properties:
+      tel:
+        type: "string" 
+      password:
+        type: "string"
+      
+  Token:
+    type: "object"
+    required: 
+    - 'token'
+    properties:
+      token:
+        type: "string" 
+        
+  Profile:
+    type: "object"
+    required: 
+    - "name"
+    - "tel"
+    - "wechat"
+    - "intro"
+    - "avatar" 
+    properties:
+      tel:
+        type: "string" 
+      name:
+        type: "string"
+      wechat:
+        type: "string"
+      intro:
+        type: "string"
+      avatar: 
+        type: "string" 
+    
+  Createclass:
+    type: "object"
+    required: 
+    - "name"
+    - "tel"
+    properties:
+      tel:
+        type: "string" 
+      name:
+        type: "string"
+        
+  ClassId:
+    type: "object"
+    required: 
+    - 'cid'
+    properties:
+      cid:
+        type: "string" 
+        
+  Signup:
+    type: "object"
+    required: 
+    - "name"
+    - "password"
+    - "tel"
+    properties:
+      tel:
+        type: "string" 
+      password:
+        type: "string"  
+      name: 
+        type: "string" 
+        
+  TeacherId:
+    type: "object"
+    required: 
+    - 'tid'
+    properties:
+      tid:
+        type: "string" 
+        
+        
+  Comment:
+    type: "object"
+    required: 
+    - "comment"
+    - "score"
+    properties:
+      comment:
+        type: "string" 
+      score:
+        type: "array" 
+        xml:
+          name: "score"
+          wrapped: true
+        items:
+          $ref: "#/definitions/Score"
+        
+
+

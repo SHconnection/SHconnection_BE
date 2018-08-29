@@ -76,7 +76,7 @@ paths:
     post:
       tags:
       - "teacher"
-      summary: "班主任注册"
+      summary: "老师注册"
       consumes:
       - "application/json"
       produces:
@@ -408,6 +408,35 @@ paths:
           description: "获取成功"
           schema:
             $ref: '#/definitions/ProfileBriefs'
+
+
+  /class/child/:
+    post:
+      tags:
+        - "class"
+      summary: "班主任导入孩子"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "孩子信息列表"
+        required: true
+        schema:
+          $ref: "#/definitions/classchild"
+      - in: "header"
+        name: "token"
+        description: "班主任token信息"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "导入成功"
+        401:
+          description: "班主任token验证错误"
+
 
   /feeds/{pagenum}/:
     get:
@@ -793,6 +822,7 @@ definitions:
     - "name"
     - "password"
     - "tel"
+    - "typeId"
     properties:
       tel:
         type: "string"
@@ -800,6 +830,9 @@ definitions:
         type: "string"
       name:
         type: "string"
+      typeId:
+        type: "integer"
+        description: "区分普通老师和班主任"
 
   TeacherId:
     type: "object"
@@ -863,3 +896,28 @@ definitions:
           $ref: "#/definitions/ProfileBrief"
       
       
+  child:
+    type: "object" 
+    required:
+      - "name"
+      - "sid" 
+    properties: 
+      name:
+        type: "string" 
+      sid: 
+        type: "string" 
+        description: "学号"
+        
+  classchild:
+    type: "object"
+    required: 
+      - "childs"
+    properties:
+      childs:
+        type: "array"
+        xml:
+          name: "childs"
+          wrapped: true
+        items:
+          $ref: "#/definitions/child"
+        

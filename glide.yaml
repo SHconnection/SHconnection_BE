@@ -1,7 +1,9 @@
 package: github.com/SHconnection/SHconnection_BE
 import:
-- package: golang.org/x/crypto 
-- package: golang.org/x/net 
-- package: golang.org/x/sys 
+- package: golang.org/x/crypto
+- package: golang.org/x/net
+- package: golang.org/x/sys
 - package: github.com/kataras/iris
   version: ~10.7.0
+- package: github.com/jinzhu/gorm
+  version: ^1.9.1

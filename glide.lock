@@ -1,5 +1,5 @@
-hash: 919d207df1da35061727ec95b2055686440a5229783154e95a89b47ae60c72d1
-updated: 2018-08-27T23:48:26.459375+08:00
+hash: 046581de817394a138506ae154385c65f29faa72a294c676c175685183133d3d
+updated: 2018-08-29T15:06:24.031861171+08:00
 imports:
 - name: github.com/aymerick/raymond
   version: b565731e1464263de0bda75f2e45d97b54b60110
@@ -17,12 +17,30 @@ imports:
   version: ebf56d35bba727c68ac77f56f2fcf90b181851aa
 - name: github.com/flosch/pongo2
   version: 24195e6d38b06020d7a92c7b11960cf2e7cad2f2
+- name: github.com/fsnotify/fsnotify
+  version: c2828203cd70a50dcccfb2761f8b1f8ceef9a8e9
 - name: github.com/hashicorp/go-version
   version: b5a281d3160aa11950a6182bd9a9dc2cb1e02d50
+- name: github.com/hashicorp/hcl
+  version: 8cb6e5b959231cc1119e43259c4a608f9c51a241
+  subpackages:
+  - hcl/ast
+  - hcl/parser
+  - hcl/printer
+  - hcl/scanner
+  - hcl/strconv
+  - hcl/token
+  - json/parser
+  - json/scanner
+  - json/token
 - name: github.com/iris-contrib/formBinder
   version: ad9fb86c356f971f30319c40ddbdcf72129a2791
 - name: github.com/iris-contrib/go.uuid
   version: 36e9d2ebbde5e3f13ab2e25625fd453271d6522e
+- name: github.com/jinzhu/gorm
+  version: 6ed508ec6a4ecb3531899a69cbc746ccf65a4166
+- name: github.com/jinzhu/inflection
+  version: 04140366298a54a039076d798123ffa108fff46c
 - name: github.com/Joker/jade
   version: 8828253bfc54f2f91aaef5f32b44a244b0a98e4f
 - name: github.com/json-iterator/go
@@ -75,6 +93,13 @@ imports:
   - gzip
 - name: github.com/klauspost/cpuid
   version: e7e905edc00ea8827e58662220139109efea09db
+- name: github.com/lexkong/log
+  version: 972f9cd951fc7e5c8797f1fb2b57b63b09ff4de9
+  subpackages:
+  - lager
+  - lager/color
+- name: github.com/magiconair/properties
+  version: c2353362d570a7bfa228149c62842019201cfb71
 - name: github.com/mattn/go-colorable
   version: efa589957cd060542a26d2dd7832fd6a6c6c3ade
 - name: github.com/mattn/go-isatty
@@ -83,16 +108,32 @@ imports:
   version: 9520e82c474b0a04dd04f8a40959027271bab992
 - name: github.com/microcosm-cc/bluemonday
   version: 82c7118e8ccf7403d4860175d97bb635e8e28239
+- name: github.com/mitchellh/mapstructure
+  version: fa473d140ef3c6adf42d6b391fe76707f1f243c8
 - name: github.com/modern-go/concurrent
   version: bacd9c7ef1dd9b15be4a9909b8ac7a4e313eec94
 - name: github.com/modern-go/reflect2
   version: 94122c33edd36123c84d5368cfb2b69df93a0ec8
+- name: github.com/pelletier/go-toml
+  version: c2dbbc24a97911339e01bda0b8cabdbd8f13b602
 - name: github.com/ryanuber/columnize
   version: abc90934186a77966e2beeac62ed966aac0561d5
 - name: github.com/Shopify/goreferrer
   version: b9777dc9f9cc3f3e426a01d218ddd6d52153f907
 - name: github.com/shurcooL/sanitized_anchor_name
   version: 86672fcb3f950f35f2e675df2240550f2a50762f
+- name: github.com/spf13/afero
+  version: 787d034dfe70e44075ccc060d346146ef53270ad
+  subpackages:
+  - mem
+- name: github.com/spf13/cast
+  version: 8965335b8c7107321228e3e3702cab9832751bac
+- name: github.com/spf13/jwalterweatherman
+  version: 14d3d4c518341bea657dd8a226f5121c0ff8c9f2
+- name: github.com/spf13/pflag
+  version: d929dcbb10863323c436af3cf76cb16a6dfc9b29
+- name: github.com/spf13/viper
+  version: 8addaed22d65eb9b54dc9e9a28537f5b8b9ca756
 - name: golang.org/x/crypto
   version: 614d502a4dac94afa3a6ce146bd1736da82514c6
   subpackages:
@@ -105,9 +146,14 @@ imports:
   - html/atom
   - publicsuffix
 - name: golang.org/x/sys
-  version: 4910a1d54f876d7b22162a85f4d066d3ee649450
+  version: d99a578cf41bfccdeaf48b0845c823a4b8b0ad5e
   subpackages:
   - unix
+- name: golang.org/x/text
+  version: 6e3c4e7365ddcc329f090f96e4348398f6310088
+  subpackages:
+  - transform
+  - unicode/norm
 - name: gopkg.in/russross/blackfriday.v2
   version: cadec560ec52d93835bf2f15bd794700d3a2473b
 - name: gopkg.in/yaml.v2

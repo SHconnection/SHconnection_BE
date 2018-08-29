@@ -1,0 +1,5 @@
+db:
+  name: shconnection
+  addr: localhost:3306
+  username: root
+  password: ilovemuxi

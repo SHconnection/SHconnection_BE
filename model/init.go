@@ -35,6 +35,8 @@ func openDB(username, password, addr, dbname string ) *gorm.DB{
 func setupDB(db *gorm.DB) {
 	db.LogMode(viper.GetBool("gormlog"))
 	db.DB().SetMaxIdleConns(0)
+	db.AutoMigrate(&Child{}, &Class{}, &Comment{}, &Evaluation{},
+	               &Feed{}, &Parent{}, &Teacher{})
 }
 
 // used for cli
@@ -66,6 +68,8 @@ func (db *Database) Init() {
 		Docker: GetDockerDB(),
 	}
 }
+
+
 
 func (db *Database) Close() {
 	DB.Self.Close()

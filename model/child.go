@@ -3,7 +3,11 @@ package model
 type Child struct {
 	BasicModel
 	Name 		string 	`json: "name" gorm: "type:varchar(20)"`
-	TheClass 		Class
+
+	//  child 属于 class
+	ClassID 	uint     // foreign key
+
+	Parents		[]Person
+
 	Sid  		string `json: "sid" gorm: "type:varchar(20)"`
-	Avatar   	string `json: "avatar" gorm: "type: vrachar(100)"`
 }

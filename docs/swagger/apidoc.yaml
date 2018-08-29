@@ -770,11 +770,14 @@ definitions:
     required:
     - "name"
     - "tel"
+    - "classname" 
     properties:
       tel:
         type: "string"
       name:
         type: "string"
+      classname:
+        type: "string" 
 
   ClassId:
     type: "object"
